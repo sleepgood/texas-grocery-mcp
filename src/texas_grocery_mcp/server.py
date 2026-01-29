@@ -2,6 +2,7 @@
 
 from fastmcp import FastMCP
 
+from texas_grocery_mcp.tools.product import product_search
 from texas_grocery_mcp.tools.store import (
     store_get_default,
     store_search,
@@ -17,6 +18,9 @@ mcp = FastMCP(
 mcp.tool(annotations={"readOnlyHint": True})(store_search)
 mcp.tool()(store_set_default)
 mcp.tool(annotations={"readOnlyHint": True})(store_get_default)
+
+# Register product tools
+mcp.tool(annotations={"readOnlyHint": True})(product_search)
 
 
 def main() -> None:
