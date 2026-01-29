@@ -2,6 +2,7 @@
 
 from fastmcp import FastMCP
 
+from texas_grocery_mcp.observability.logging import configure_logging
 from texas_grocery_mcp.tools.cart import cart_add, cart_check_auth, cart_get, cart_remove
 from texas_grocery_mcp.tools.product import product_search
 from texas_grocery_mcp.tools.store import (
@@ -9,6 +10,9 @@ from texas_grocery_mcp.tools.store import (
     store_search,
     store_set_default,
 )
+
+# Configure logging before anything else
+configure_logging()
 
 mcp = FastMCP(
     name="texas-grocery-mcp",
