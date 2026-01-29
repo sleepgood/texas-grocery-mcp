@@ -2,6 +2,7 @@
 
 from fastmcp import FastMCP
 
+from texas_grocery_mcp.observability.health import health_live, health_ready
 from texas_grocery_mcp.observability.logging import configure_logging
 from texas_grocery_mcp.tools.cart import cart_add, cart_check_auth, cart_get, cart_remove
 from texas_grocery_mcp.tools.product import product_search
@@ -32,6 +33,10 @@ mcp.tool(annotations={"readOnlyHint": True})(cart_check_auth)
 mcp.tool(annotations={"readOnlyHint": True})(cart_get)
 mcp.tool(annotations={"destructiveHint": True})(cart_add)
 mcp.tool(annotations={"destructiveHint": True})(cart_remove)
+
+# Register health check tools
+mcp.tool(annotations={"readOnlyHint": True})(health_live)
+mcp.tool(annotations={"readOnlyHint": True})(health_ready)
 
 
 def main() -> None:

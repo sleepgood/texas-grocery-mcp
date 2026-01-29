@@ -2,6 +2,11 @@
 
 from texas_grocery_mcp.models.cart import AppliedCoupon, Cart, CartItem
 from texas_grocery_mcp.models.errors import AuthRequiredResponse, ErrorResponse
+from texas_grocery_mcp.models.health import (
+    CircuitBreakerStatus,
+    ComponentHealth,
+    HealthResponse,
+)
 from texas_grocery_mcp.models.product import Product, ProductCoupon, ProductNutrition
 from texas_grocery_mcp.models.store import Store, StoreHours
 
@@ -10,7 +15,10 @@ __all__ = [
     "AuthRequiredResponse",
     "Cart",
     "CartItem",
+    "CircuitBreakerStatus",
+    "ComponentHealth",
     "ErrorResponse",
+    "HealthResponse",
     "Product",
     "ProductCoupon",
     "ProductNutrition",
