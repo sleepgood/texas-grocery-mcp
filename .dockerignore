@@ -24,6 +24,7 @@ __pycache__/
 # Environment files
 .env
 .env.local
+.mcp.json
 
 # Test and coverage
 .coverage
@@ -42,3 +43,8 @@ docs/
 
 # Auth state (never include in build)
 .texas-grocery-mcp/
+
+# Local tooling artifacts
+.playwright-mcp/
+.claude/
+firebase-debug.log

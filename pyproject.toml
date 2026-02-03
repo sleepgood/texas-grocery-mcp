@@ -6,9 +6,16 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}
 authors = [
-    {name = "Michael Walker", email = "mgwalkerjr95@gmail.com"}
+    {name = "Michael Walker"}
 ]
 keywords = ["mcp", "heb", "grocery", "ai", "llm"]
+
+[project.urls]
+Homepage = "https://github.com/mgwalkerjr95/texas-grocery-mcp"
+Repository = "https://github.com/mgwalkerjr95/texas-grocery-mcp"
+Issues = "https://github.com/mgwalkerjr95/texas-grocery-mcp/issues"
+Changelog = "https://github.com/mgwalkerjr95/texas-grocery-mcp/blob/main/CHANGELOG.md"
+
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -26,9 +33,17 @@ dependencies = [
     "redis>=5.0",
     "structlog>=24.0",
     "prometheus-client>=0.19",
+    "keyring>=25.0",
+    "cryptography>=42.0",
 ]
 
 [project.optional-dependencies]
+# Browser support for fast session refresh (10-15s vs 4min)
+# Install with: pip install texas-grocery-mcp[browser]
+browser = [
+    "playwright>=1.40.0",
+]
+
 dev = [
     "pytest>=8.0",
     "pytest-asyncio>=0.23",
@@ -36,6 +51,7 @@ dev = [
     "mypy>=1.8",
     "ruff>=0.1",
     "respx>=0.21",
+    "playwright>=1.40.0",
 ]
 
 [project.scripts]
@@ -48,6 +64,8 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.sdist]
 include = [
     "/src",
+    "/README.md",
+    "/LICENSE",
 ]
 
 [tool.hatch.build.targets.wheel]

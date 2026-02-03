@@ -4,8 +4,6 @@ import json
 import sys
 from io import StringIO
 
-import pytest
-
 
 def test_logger_outputs_json():
     """Logger should output JSON to stderr."""

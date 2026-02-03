@@ -129,7 +129,7 @@ class CircuitBreaker:
                     failure_count=self._failure_count,
                 )
 
-    def get_status(self) -> dict:
+    def get_status(self) -> dict[str, str | int]:
         """Get circuit breaker status for health checks."""
         return {
             "name": self.name,

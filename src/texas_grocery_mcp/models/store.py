@@ -34,3 +34,44 @@ class Store(BaseModel):
     )
     latitude: float | None = Field(default=None, description="Store latitude")
     longitude: float | None = Field(default=None, description="Store longitude")
+    supports_curbside: bool = Field(
+        default=True,
+        description="Whether store supports curbside pickup for online orders",
+    )
+    supports_delivery: bool = Field(
+        default=False,
+        description="Whether store supports home delivery",
+    )
+
+
+class GeocodedLocation(BaseModel):
+    """Geocoded location information."""
+
+    latitude: float = Field(description="Latitude of geocoded location")
+    longitude: float = Field(description="Longitude of geocoded location")
+    display_name: str = Field(description="Human-readable location name")
+
+
+class SearchAttempt(BaseModel):
+    """Record of a store search attempt."""
+
+    query: str = Field(description="Query string used")
+    result: str = Field(description="Result: 'success', 'no_stores', 'error'")
+
+
+class StoreSearchResult(BaseModel):
+    """Result of a store search including metadata."""
+
+    stores: list[Store] = Field(default_factory=list, description="Found stores")
+    count: int = Field(description="Number of stores found")
+    search_address: str = Field(description="Original search address")
+    geocoded: GeocodedLocation | None = Field(
+        default=None, description="Geocoded location if available"
+    )
+    attempts: list[SearchAttempt] = Field(
+        default_factory=list, description="Query attempts made"
+    )
+    error: str | None = Field(default=None, description="Error message if search failed")
+    suggestions: list[str] = Field(
+        default_factory=list, description="Suggestions for improving search"
+    )
