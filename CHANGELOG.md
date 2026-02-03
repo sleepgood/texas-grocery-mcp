@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 2026-02-02
+
+### Added
+- Project URLs in PyPI metadata (homepage, repository, issues, changelog)
+- PyPI, license, and CI badges in README
+- CONTRIBUTING.md, SECURITY.md documentation
+
+### Fixed
+- GitHub repository URL in README
+
 ## [0.1.0] - 2026-02-02
 
 ### Added
@@ -47,4 +57,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Docker support with docker-compose
 - CI/CD with GitHub Actions
 
+[0.1.1]: https://github.com/mgwalkerjr95/texas-grocery-mcp/releases/tag/v0.1.1
 [0.1.0]: https://github.com/mgwalkerjr95/texas-grocery-mcp/releases/tag/v0.1.0

@@ -1,6 +1,6 @@
 [project]
 name = "texas-grocery-mcp"
-version = "0.1.0"
+version = "0.1.1"
 description = "MCP server for HEB grocery store integration"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -9,13 +9,6 @@ authors = [
     {name = "Michael Walker"}
 ]
 keywords = ["mcp", "heb", "grocery", "ai", "llm"]
-
-[project.urls]
-Homepage = "https://github.com/mgwalkerjr95/texas-grocery-mcp"
-Repository = "https://github.com/mgwalkerjr95/texas-grocery-mcp"
-Issues = "https://github.com/mgwalkerjr95/texas-grocery-mcp/issues"
-Changelog = "https://github.com/mgwalkerjr95/texas-grocery-mcp/blob/main/CHANGELOG.md"
-
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -56,6 +49,12 @@ dev = [
 
 [project.scripts]
 texas-grocery-mcp = "texas_grocery_mcp.server:main"
+
+[project.urls]
+Homepage = "https://github.com/mgwalkerjr95/texas-grocery-mcp"
+Repository = "https://github.com/mgwalkerjr95/texas-grocery-mcp"
+Issues = "https://github.com/mgwalkerjr95/texas-grocery-mcp/issues"
+Changelog = "https://github.com/mgwalkerjr95/texas-grocery-mcp/blob/main/CHANGELOG.md"
 
 [build-system]
 requires = ["hatchling"]
