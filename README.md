@@ -1,50 +1,58 @@
-# Texas Grocery MCP
+# 🛒 Texas Grocery MCP
 
 [![PyPI version](https://badge.fury.io/py/texas-grocery-mcp.svg)](https://pypi.org/project/texas-grocery-mcp/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![CI](https://github.com/mgwalkerjr95/texas-grocery-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/mgwalkerjr95/texas-grocery-mcp/actions/workflows/ci.yml)
 
-An MCP (Model Context Protocol) server that enables AI agents to interact with HEB grocery stores for product search, product details, cart management, and digital coupons.
+> 🤖 Let AI do your grocery shopping! An MCP server that connects Claude to H-E-B grocery stores.
 
-This project is **not affiliated with H-E-B**. It uses unofficial web APIs and browser automation against HEB.com; use responsibly and ensure your usage complies with applicable terms and laws.
+**Search products, manage your cart, clip coupons, and more — all through natural conversation.**
 
-## Features
+⚠️ This project is **not affiliated with H-E-B**. It uses unofficial web APIs and browser automation against HEB.com; use responsibly and ensure your usage complies with applicable terms and laws.
 
-- **Store Search**: Find HEB stores by address or zip code
-- **Product Search**: Search products with pricing and availability
-- **Cart Management**: Add/remove items with human-in-the-loop confirmation
-- **Product Details**: Ingredients, nutrition facts, allergens, warnings, and dietary attributes
-- **Coupons**: List/search/clip digital coupons (requires authentication)
-- **Session Management**: Refresh sessions automatically (fast with embedded Playwright)
+---
 
-## Installation
+## ✨ Features
 
-### Basic Installation
+| Feature | Description |
+|---------|-------------|
+| 🏪 **Store Search** | Find HEB stores by address or zip code |
+| 🔍 **Product Search** | Search products with pricing and availability |
+| 🛒 **Cart Management** | Add/remove items with human-in-the-loop confirmation |
+| 📋 **Product Details** | Ingredients, nutrition facts, allergens, warnings |
+| 🎟️ **Digital Coupons** | List, search, and clip coupons to save money |
+| 🔄 **Auto Session Refresh** | Handles bot detection automatically (~15 seconds) |
+
+---
+
+## 📦 Installation
+
+### Quick Start
 
 ```bash
 pip install texas-grocery-mcp
 ```
 
-This provides all core functionality. Session refresh requires orchestrating Playwright MCP (~4 minutes).
-
-### Full Installation (Recommended)
+### Full Installation (Recommended) 🚀
 
 ```bash
 pip install texas-grocery-mcp[browser]
 playwright install chromium
 ```
 
-This enables **fast auto-refresh** (~15 seconds) using an embedded browser. Adds ~150MB for Chromium.
+This enables **fast auto-refresh** (~15 seconds) using an embedded browser.
 
 ### Prerequisites
 
-For cart operations and session management, you'll also need **Microsoft Playwright MCP**:
+For cart operations and session management, you'll also need **Playwright MCP**:
 
 ```bash
 npm install -g @anthropic-ai/mcp-playwright
 ```
 
-## Configuration
+---
+
+## ⚙️ Configuration
 
 ### Claude Desktop
 
@@ -76,9 +84,11 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 | `REDIS_URL` | Redis cache URL | None (in-memory) |
 | `LOG_LEVEL` | Logging level | INFO |
 
-## Usage
+---
 
-### Finding a Store
+## 🎯 Usage Examples
+
+### 🏪 Finding a Store
 
 ```
 User: Find HEB stores near Austin, TX
@@ -86,7 +96,7 @@ User: Find HEB stores near Austin, TX
 Agent uses: store_search(address="Austin, TX", radius_miles=10)
 ```
 
-### Searching Products
+### 🔍 Searching Products
 
 ```
 User: Search for organic milk
@@ -95,173 +105,176 @@ Agent uses: store_change(store_id="590")
 Agent uses: product_search(query="organic milk")
 ```
 
-### Getting Product Details
-
-For detailed information about a specific product (ingredients, nutrition, allergens, warnings):
+### 📋 Getting Product Details
 
 ```
 User: What are the ingredients in H-E-B olive oil?
 
 Agent uses: product_search(query="heb olive oil")
-# Returns products with product_id
-
 Agent uses: product_get(product_id="127074")
-# Returns detailed info: ingredients, nutrition facts, warnings, dietary attributes
+# Returns: ingredients, nutrition facts, warnings, dietary attributes
 ```
 
-The `product_get` tool returns comprehensive information including:
-- **Ingredients**: Full ingredient statement
-- **Nutrition Facts**: Complete FDA panel with serving size, calories, and all nutrients
-- **Safety Warnings**: Allergen info and safety precautions
-- **Dietary Attributes**: Gluten-free, organic, vegan, kosher, etc.
-- **Preparation/Storage**: Instructions for use and storage
-- **Store Location**: Aisle or section where product is located
+The `product_get` tool returns:
+- 🥗 **Ingredients** - Full ingredient statement
+- 📊 **Nutrition Facts** - Complete FDA panel
+- ⚠️ **Safety Warnings** - Allergen info and precautions
+- 🌿 **Dietary Attributes** - Gluten-free, organic, vegan, kosher, etc.
+- 📍 **Store Location** - Aisle or section
 
-### Adding to Cart
-
-Cart operations require authentication via Playwright MCP:
+### 🛒 Adding to Cart
 
 ```
 User: Add 2 gallons of milk to my cart
 
 Agent uses: cart_add(product_id="123456", quantity=2)
-# Returns preview with confirm=true instruction
+# Returns preview for confirmation
 
 Agent uses: cart_add(product_id="123456", quantity=2, confirm=true)
-# Executes the action
+# ✅ Added to cart!
 ```
 
-## Session Management
+### 🎟️ Clipping Coupons
 
-HEB uses bot detection (reese84 token) that expires every ~11 minutes. This MCP handles session refresh automatically.
+```
+User: Find coupons for cereal
 
-### Fast Auto-Refresh (Recommended)
+Agent uses: coupon_search(query="cereal")
+Agent uses: coupon_clip(coupon_id="ABC123", confirm=true)
+# ✅ Coupon clipped!
+```
 
-If you installed with `[browser]` support:
+---
+
+## 🔐 Session Management
+
+HEB uses bot detection that expires every ~11 minutes. This MCP handles it automatically!
+
+### ⚡ Fast Auto-Refresh (Recommended)
+
+With `[browser]` support installed:
 
 ```
 Agent uses: session_refresh()
-# Completes in ~10-15 seconds
+# ✅ Completes in ~10-15 seconds
 ```
 
-This runs an embedded browser to refresh your session automatically.
+### 🔑 Auto-Login
 
-### Manual Refresh (Fallback)
-
-Without browser support, use the Playwright MCP orchestration:
+Save your credentials once for automatic login:
 
 ```
-Agent uses: session_refresh()
-# Returns Playwright commands to execute (~4 minutes)
+Agent uses: session_save_credentials(email="you@email.com", password="...")
+# Credentials stored securely in system keyring
+# Future session refreshes will auto-login!
 ```
 
-### Initial Login
+---
 
-For first-time authentication or when session fully expires:
+## 🧰 Available Tools
 
-1. `browser_navigate('https://www.heb.com/my-account/login')`
-2. Complete login in the browser
-3. Save storage state:
-   ```javascript
-   await page.context().storageState({ path: '~/.texas-grocery-mcp/auth.json' })
-   ```
-4. Retry cart operations
+### 🏪 Store Tools
+| Tool | Description |
+|------|-------------|
+| `store_search` | Find stores by address |
+| `store_change` | Set preferred store |
+| `store_get_default` | Get current default store |
 
-Or use `session_refresh(headless=False)` to login in a visible browser window.
+### 🔍 Product Tools
+| Tool | Description |
+|------|-------------|
+| `product_search` | Search products with pricing |
+| `product_search_batch` | Search multiple products (up to 20) |
+| `product_get` | Get detailed product info |
 
-## Available Tools
+### 🛒 Cart Tools
+| Tool | Description |
+|------|-------------|
+| `cart_check_auth` | Check authentication status |
+| `cart_get` | View cart contents |
+| `cart_add` | Add item (requires confirmation) |
+| `cart_add_many` | Bulk add multiple items |
+| `cart_remove` | Remove item |
 
-### Store Tools
-- `store_search` - Find stores by address
-- `store_change` - Set preferred store (syncs with HEB.com when authenticated)
-- `store_get_default` - Get current default store
+### 🎟️ Coupon Tools
+| Tool | Description |
+|------|-------------|
+| `coupon_list` | List available coupons |
+| `coupon_search` | Search coupons by keyword |
+| `coupon_clip` | Clip a coupon |
+| `coupon_clipped` | List your clipped coupons |
 
-### Product Tools
-- `product_search` - Search products by name with pricing and availability
-- `product_search_batch` - Search multiple products at once (up to 20 queries)
-- `product_get` - Get comprehensive product details (ingredients, nutrition, warnings, dietary attributes)
+### 🔐 Session Tools
+| Tool | Description |
+|------|-------------|
+| `session_status` | Check session health |
+| `session_refresh` | Refresh/login session |
+| `session_save_credentials` | Save credentials for auto-login |
+| `session_clear` | Logout |
 
-### Cart Tools
-- `cart_check_auth` - Check authentication status
-- `cart_get` - View cart contents
-- `cart_add` - Add item (requires confirmation)
-- `cart_add_with_retry` - Add item with automatic retry on failure
-- `cart_remove` - Remove item (requires confirmation)
+---
 
-### Coupon Tools
-- `coupon_list` - List available digital coupons
-- `coupon_search` - Search coupons by keyword
-- `coupon_categories` - Get coupon category list
-- `coupon_clip` - Clip a coupon to your account (requires confirmation)
-- `coupon_clipped` - List your clipped coupons
+## 📚 Documentation
 
-### Session Tools
-- `session_status` - Check session health and token expiration
-- `session_refresh` - Refresh/login (fast with `[browser]`, otherwise returns Playwright MCP commands)
-- `session_save_instructions` - Get manual login + session-save instructions
-- `session_save_credentials` - Save credentials for auto-login (secure)
-- `session_clear_credentials` - Remove saved credentials
-- `session_clear` - Clear saved session (logout)
+- 🔧 [Troubleshooting Guide](docs/TROUBLESHOOTING.md) - Solutions for common issues
+- 🤝 [Contributing](CONTRIBUTING.md) - How to contribute
+- 📝 [Changelog](CHANGELOG.md) - Version history
+- 🔒 [Security](SECURITY.md) - Security policy
 
-### Health Tools
-- `health_live` - Liveness probe
-- `health_ready` - Readiness probe with component status
+---
 
-## Documentation
-
-- [Troubleshooting Guide](docs/TROUBLESHOOTING.md) - Solutions for common issues
-- [Contributing](CONTRIBUTING.md) - How to contribute to this project
-- [Changelog](CHANGELOG.md) - Version history and release notes
-- [Security](SECURITY.md) - Security policy and best practices
-
-## Development
+## 🛠️ Development
 
 ```bash
 # Clone repository
 git clone https://github.com/mgwalkerjr95/texas-grocery-mcp
 cd texas-grocery-mcp
 
-# Install with dev dependencies (includes Playwright)
+# Install with dev dependencies
 pip install -e ".[dev]"
 playwright install chromium
 
 # Run tests
 pytest tests/ -v
 
-# Run linting
+# Linting & type checking
 ruff check src/
-
-# Run type checking
 mypy src/
 ```
 
-### Docker Development
+### 🐳 Docker
 
 ```bash
-# Build and run with Redis
 docker-compose up --build
-
-# Run tests in container
-docker-compose run texas-grocery-mcp pytest
 ```
 
-## Architecture
+---
+
+## 🏗️ Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    User's MCP Environment                    │
 │                                                             │
 │  ┌─────────────────────┐    ┌─────────────────────────────┐ │
-│  │  Playwright MCP     │    │     Texas Grocery MCP       │ │
-│  │  (Browser Auth)     │───▶│     (Grocery Logic)         │ │
+│  │  🎭 Playwright MCP  │    │   🛒 Texas Grocery MCP      │ │
+│  │  (Browser Auth)     │───▶│   (Grocery Logic)           │ │
 │  └─────────────────────┘    └─────────────────────────────┘ │
 │                                        │                     │
 └────────────────────────────────────────┼─────────────────────┘
                                          │
                                          ▼
-                                  HEB GraphQL API
+                                   🌐 HEB GraphQL API
 ```
 
-## License
+---
 
-MIT
+## 📄 License
+
+MIT © Michael Walker
+
+---
+
+<p align="center">
+  Made with ❤️ in Texas 🤠
+</p>
