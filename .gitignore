@@ -55,6 +55,7 @@ docs/plans/
 docs/brainstorms/
 docs/meta/
 docs/reviews/
+docs/LAUNCH-PLAN.md
 
 # MCP / tooling local state
 .playwright-mcp/
