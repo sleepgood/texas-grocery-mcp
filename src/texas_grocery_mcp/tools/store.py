@@ -249,6 +249,21 @@ async def store_change(
     result = await client.select_store(store_id, ignore_conflicts=ignore_conflicts)
 
     if result.get("error"):
+        # If the API failed due to a stale persisted query hash, fall back to local store setting
+        # so product searches still work even when the API mutation is temporarily broken.
+        err_msg = result.get("message", "")
+        if "Persisted query hash" in err_msg or "no longer valid" in err_msg:
+            StateManager.set_default_store_id_sync(store_id)
+            return {
+                "success": True,
+                "store_id": store_id,
+                "store_name": store_name,
+                "store_address": store_address,
+                "message": f"Local default set to {store_name or store_id}",
+                "method": "local_only",
+                "warning": "Store set locally (API mutation hash outdated). Product searches will work.",
+            }
+
         # API failed or verification failed - return the error details
         error_response = {
             "error": True,

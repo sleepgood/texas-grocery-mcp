@@ -58,11 +58,11 @@ class PersistedQueryNotFoundError(Exception):
 # Persisted Query Hashes (discovered via reverse engineering)
 # These may change when HEB deploys new code
 PERSISTED_QUERIES = {
-    "ShopNavigation": "0e669423cef683226cb8eb295664619c8e0f95945734e0a458095f51ee89efb3",
+    "ShopNavigation": "53197129989f3555e560f3d11a85ebff9a2abe9d9cf6f7f10a8c93feda9503b2",
     "alertEntryPoint": "3e3ccd248652e8fce4674d0c5f3f30f2ddc63da277bfa0ff36ea9420e5dffd5e",
-    "cartEstimated": "7b033abaf2caa80bc49541e51d2b89e3cc6a316e37c4bd576d9b5c498a51e9c5",
+    "cartEstimated": "903e7d75db5bcbaf25ff53bf0022a7a80d7b354dbb6d503f19ac3a40fb97fc1a",
     "typeaheadContent": "1ed956c0f10efcfc375321f33c40964bc236fff1397a4e86b7b53cb3b18ad329",
-    "cartItemV2": "ade8ec1365c185244d42f9cc4c13997fec4b633ac3c38ff39558df92b210c6d0",
+    "cartItemV2": "4bd06e11f0a99613813f40c48dbb1afc0bd05596f5e73df6c25bc21ecc603613",
     "StoreSearch": "e01fa39e66c3a2c7881322bc48af6a5af97d49b1442d433f2d09d273de2db4b6",
     "CouponClip": "88b18ac22cee98372428d9a91d759ffb5e919026ee61c747f9f88d11336b846b",
     # Store change mutation - changes the active pickup store
